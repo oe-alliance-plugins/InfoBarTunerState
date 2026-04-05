@@ -1,0 +1,19 @@
+{
+  "branch": "main",
+  "depends_recipe": "",
+  "description_control": "Show the tuner state as infobar popup",
+  "description_recipe": "Show the tuner state as infobar popup",
+  "history_source_dir": "infobartunerstate",
+  "internal_package_name": "enigma2-plugin-extensions-infobartunerstate",
+  "module_dir_name": "InfoBarTunerState",
+  "output_subdir": "infobartunerstate",
+  "package_name": "enigma2-plugin-extensions-infobartunerstate",
+  "plugin_src_rel": "infobartunerstate",
+  "python_package": "InfoBarTunerState",
+  "rdepends_recipe": "",
+  "replaces": "",
+  "repo_name": "InfoBarTunerState",
+  "rrecommends": "",
+  "rreplaces": "",
+  "selected_from_plugin_list": true
+}
