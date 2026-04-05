@@ -20,10 +20,9 @@
 # for localized messages
 from . import _
 from math import ceil
-from os import path, statvfs, stat
+from os import path, statvfs
 from socket import gethostbyaddr, herror
 from collections import defaultdict
-from operator import attrgetter, itemgetter
 import NavigationInstance
 from itertools import zip_longest
 
@@ -31,32 +30,30 @@ from itertools import zip_longest
 from Plugins.Plugin import PluginDescriptor
 
 # Config
-from Components.config import *
+from Components.config import config
 
 # Screen
 from Components.Label import Label
-from Components.Language import *
 from Components.Pixmap import Pixmap, MultiPixmap
 from Components.ProgressBar import ProgressBar
-from Components.ServiceEventTracker import ServiceEventTracker
 from Screens.Screen import Screen
-from Screens.InfoBar import InfoBar
 from Screens.InfoBarGenerics import InfoBarShowHide
 from Tools.Directories import resolveFilename, SCOPE_PLUGINS
 from ServiceReference import ServiceReference
 from time import strftime, time, localtime, mktime
 from datetime import datetime, timedelta
-from enigma import ePoint, eSize, getDesktop, eTimer, iPlayableService, iRecordableService, eEPGCache, eServiceCenter, eServiceReference
+from enigma import ePoint, eSize, getDesktop, eTimer, eEPGCache, eServiceCenter, eServiceReference
 
 # Plugin internal
-from .netstat import netstat
+# from .netstat import netstat
 
 # Extenal plugins: WebInterface
 try:
-	from Plugins.Extensions.WebInterface.WebScreens import StreamingWebScreen
+	from Plugins.Extensions.WebInterface.WebScreens import StreamingWebScreen  # noqa: F401
 except ImportError:
 	StreamingWebScreen = None
 
+from .plugin import set_global_state
 
 # Globals
 InfoBarShow = None
@@ -101,7 +98,6 @@ def recoverInfoBar():
 
 def InfoBarShowTunerState(self):
 	from Plugins.Extensions.InfoBarTunerState.plugin import gInfoBarTunerState
-	global gInfoBarTunerState
 	global InfoBarShow
 	if InfoBarShow:
 		InfoBarShow(self)
@@ -111,7 +107,6 @@ def InfoBarShowTunerState(self):
 
 def InfoBarHideTunerState(self):
 	from Plugins.Extensions.InfoBarTunerState.plugin import gInfoBarTunerState
-	global gInfoBarTunerState
 	global InfoBarHide
 	if InfoBarHide:
 		InfoBarHide(self)
@@ -384,7 +379,7 @@ class InfoBarTunerState(object):
 				try:
 					from Plugins.Extensions.WebInterface.WebScreens import streamingScreens
 				except ImportError:
-					streamingScreens = []
+					streamingScreens = []  # noqa: F841
 
 				# Extract parameters
 				tuner, tunertype = getTuner(stream.getRecordService())
@@ -427,7 +422,7 @@ class InfoBarTunerState(object):
 				try:
 					host = ip and gethostbyaddr(ip)
 					client = host and host[0].split('.')[0]
-				except herror as x:
+				except herror:
 					pass
 
 				number = service_ref and getNumber(service_ref.ref)
@@ -781,12 +776,10 @@ class InfoBarTunerState(object):
 		self.unbindInfoBar()
 		self.removeEvents()
 		self.hide()
-		for id, win in list(self.entries.items()):
+		for id, win in self.entries.items():
 			self.session.deleteDialog(win)
 			del self.entries[id]
-		from Plugins.Extensions.InfoBarTunerState.plugin import gInfoBarTunerState
-		global gInfoBarTunerState
-		gInfoBarTunerState = None
+		set_global_state()
 
 
 #######################################################

@@ -21,7 +21,7 @@
 from . import _
 
 # Config
-from Components.config import *
+from Components.config import config, ConfigYesNo, ConfigSelectionNumber, ConfigSubsection, ConfigSelection, ConfigNothing, ConfigEnableDisable
 
 # Plugin
 from Plugins.Plugin import PluginDescriptor
@@ -51,6 +51,11 @@ ABOUT = "\n  " + NAME + " " + VERSION + "\n\n" \
 
 # Globals
 gInfoBarTunerState = None
+
+
+def set_global_state(state=None):
+    global gInfoBarTunerState
+    gInfoBarTunerState = state
 
 
 # Config choices
