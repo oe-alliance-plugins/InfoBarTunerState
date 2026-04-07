@@ -53,8 +53,6 @@ try:
 except ImportError:
 	StreamingWebScreen = None
 
-from .plugin import set_global_state
-
 # Globals
 InfoBarShow = None
 InfoBarHide = None
@@ -779,7 +777,8 @@ class InfoBarTunerState(object):
 		for id, win in self.entries.items():
 			self.session.deleteDialog(win)
 			del self.entries[id]
-		set_global_state()
+		from Plugins.Extensions.InfoBarTunerState import plugin
+		plugin.gInfoBarTunerState = None
 
 
 #######################################################

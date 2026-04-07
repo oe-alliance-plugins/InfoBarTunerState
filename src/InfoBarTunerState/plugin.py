@@ -53,11 +53,6 @@ ABOUT = "\n  " + NAME + " " + VERSION + "\n\n" \
 gInfoBarTunerState = None
 
 
-def set_global_state(state=None):
-    global gInfoBarTunerState
-    gInfoBarTunerState = state
-
-
 # Config choices
 field_choices = [
     ("TypeIcon", _("Type (Icon)")),
