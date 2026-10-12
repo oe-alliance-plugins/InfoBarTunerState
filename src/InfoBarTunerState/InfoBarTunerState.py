@@ -774,9 +774,9 @@ class InfoBarTunerState(object):
 		self.unbindInfoBar()
 		self.removeEvents()
 		self.hide()
-		for id, win in self.entries.items():
+		for win in self.entries.values():
 			self.session.deleteDialog(win)
-			del self.entries[id]
+		self.entries.clear()
 		from Plugins.Extensions.InfoBarTunerState import plugin
 		plugin.gInfoBarTunerState = None
 
